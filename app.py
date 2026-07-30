@@ -10,7 +10,6 @@ import pandas as pd
 import joblib
 import plotly.express as px
 import plotly.graph_objects as go
-import os
 
 # ==================== Page Configuration ====================
 st.set_page_config(
@@ -86,56 +85,6 @@ st.markdown("""
         transform: scale(1.05);
         box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
-    
-    /* ===== Developer Card Styles ===== */
-    .developer-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        text-align: center;
-        border: 2px solid #667eea;
-    }
-    
-    .developer-avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 4px solid #667eea;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        margin-bottom: 1rem;
-    }
-    
-    .developer-name {
-        color: #2c3e50;
-        font-size: 1.3rem;
-        font-weight: bold;
-        margin: 0.5rem 0;
-    }
-    
-    .developer-id {
-        color: #667eea;
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 0.3rem 0;
-    }
-    
-    .developer-role {
-        color: #7f8c8d;
-        font-size: 0.9rem;
-        font-style: italic;
-        margin: 0.3rem 0;
-    }
-    
-    .footer-developer {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        text-align: center;
-        border-top: 3px solid #667eea;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -155,50 +104,18 @@ def load_model():
 
 model, scaler, feature_names = load_model()
 
-# ==================== Developer Info ====================
-DEVELOPER_NAME = "นายจตุรภัทร สถาปิคานนท์"
-DEVELOPER_ID = "024"
-# 📌 วางรูปชื่อ "developer.jpg" ไว้ในโฟลเดอร์เดียวกับไฟล์นี้
-# หรือเปลี่ยนเป็น URL รูปที่ต้องการ เช่น "https://..."
-DEVELOPER_IMAGE = "developer.jpg"
-
 # ==================== Sidebar ====================
 with st.sidebar:
     st.markdown("## 🏠 California Housing")
     st.markdown("### Price Predictor")
     st.markdown("---")
-    
-    # ===== Developer Profile in Sidebar =====
-    st.markdown("### 👨‍💻 ผู้พัฒนา")
-    
-    # แสดงรูปผู้พัฒนา (ใช้ placeholder ถ้าไม่มีไฟล์รูป)
-    if os.path.exists(DEVELOPER_IMAGE):
-        st.image(DEVELOPER_IMAGE, width=150)
-    else:
-        # ใช้ placeholder avatar จาก UI Avatars
-        placeholder_url = f"https://ui-avatars.com/api/?name=Jaturapat&size=150&background=667eea&color=fff&bold=true"
-        st.image(placeholder_url, width=150)
-    
-    st.markdown(f"""
-    <div style='text-align: center; margin-top: 0.5rem;'>
-        <p style='font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0;'>
-            {DEVELOPER_NAME}
-        </p>
-        <p style='font-size: 1rem; color: #a8d0ff; margin: 0.3rem 0;'>
-            รหัสนักศึกษา: {DEVELOPER_ID}
-        </p>
-        <p style='font-size: 0.85rem; color: #bdc3c7; font-style: italic; margin: 0.3rem 0;'>
-            ML with Python Developer
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
     st.markdown("""
     **โมเดล:** Random Forest Regressor  
     **Dataset:** California Housing  
     **Accuracy:** R² = 0.81
+    
+    ---
+    พัฒนาโดย: นักศึกษาวิชา ML with Python
     """)
     
     with st.expander("📖 คำอธิบาย Features"):
@@ -352,28 +269,11 @@ if predict_button:
         })
         st.dataframe(input_df, use_container_width=True, hide_index=True)
 
-# ==================== Footer with Developer Info ====================
+# ==================== Footer ====================
 st.markdown("---")
-
-# แสดง Developer Card แบบเต็มใน Footer
-st.markdown(f"""
-<div class='footer-developer'>
-    <div style='display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap;'>
-        <div>
-            <img src='{DEVELOPER_IMAGE if os.path.exists(DEVELOPER_IMAGE) else "https://ui-avatars.com/api/?name=Jaturapat&size=120&background=667eea&color=fff&bold=true"}' 
-                 class='developer-avatar' 
-                 onerror="this.src='https://ui-avatars.com/api/?name=Jaturapat&size=120&background=667eea&color=fff&bold=true'">
-        </div>
-        <div style='text-align: left;'>
-            <h3 style='color: #2c3e50; margin: 0;'>👨‍💻 พัฒนาโดย</h3>
-            <p class='developer-name'>{DEVELOPER_NAME}</p>
-            <p class='developer-id'>🆔 รหัสนักศึกษา: {DEVELOPER_ID}</p>
-            <p class='developer-role'>📚 วิชา: การโปรแกรมสำหรับการเรียนรู้ด้วยเครื่องด้วยภาษาไพทอน</p>
-        </div>
-    </div>
-    <hr style='margin: 1.5rem 0; border: none; border-top: 1px solid #e0e0e0;'>
-    <p style='color: #7f8c8d; margin: 0;'>
-        📅 กรกฎาคม 2026 | 🛠️ Built with <b>Streamlit</b> + <b>scikit-learn</b> + <b>Plotly</b>
-    </p>
+st.markdown("""
+<div style='text-align: center; color: #7f8c8d; padding: 1rem;'>
+    <p>🎓 พัฒนาเป็นส่วนหนึ่งของวิชา การโปรแกรมสำหรับการเรียนรู้ด้วยเครื่องด้วยภาษาไพทอน</p>
+    <p> กรกฎาคม 2026 | 🛠️ Built with Streamlit + scikit-learn</p>
 </div>
 """, unsafe_allow_html=True)
